@@ -14,7 +14,7 @@ BEGIN {
     }
 }
 
-use Log::Report 'xml-compile-soap-mojoua';
+use Log::Report 'xml-compile-soap-mojolicious';
 
 use XML::Compile::SOAP::Util qw/SOAP11ENV SOAP11HTTP/;
 use XML::Compile    ();

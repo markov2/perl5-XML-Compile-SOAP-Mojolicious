@@ -1,6 +1,7 @@
 ChangeLog
 MANIFEST
 Makefile.PL
+lib/XML/Compile/SOAP/Mojolicious.pm
 lib/XML/Compile/Transport/SOAPHTTP_MojoUA.pm
 t/01use.t
 xt/99pod.t

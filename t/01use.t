@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 use lib 'lib', 't';
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 # The versions of the following packages are reported to help understanding
 # the environment in which the tests are run.  This is certainly not a
@@ -16,7 +16,7 @@ my @show_versions =
     XML::Compile::Cache
     XML::LibXML
     Log::Report
-    AnyEvent::HTTP
+    Mojolicious
    /;
 
 foreach my $package (@show_versions)
@@ -34,3 +34,4 @@ foreach my $package (@show_versions)
 warn "libxml2 ".XML::LibXML::LIBXML_DOTTED_VERSION()."\n";
 
 use_ok('XML::Compile::Transport::SOAPHTTP_MojoUA');
+use_ok('XML::Compile::SOAP::Mojolicious');

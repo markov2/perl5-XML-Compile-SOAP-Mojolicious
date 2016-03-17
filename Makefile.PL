@@ -4,13 +4,13 @@ use 5.008;
 
 WriteMakefile
  ( NAME	 	=> 'XML::Compile::SOAP::Mojolicious'
- , VERSION	=> '0.01'
+ , VERSION	=> '0.02'
  , PREREQ_PM    =>
    { XML::Compile::SOAP   => '3.16'
    , Log::Report          => '1.05'
    , Time::HiRes          => 0
-   , AnyEvent::HTTP       => '1.46'
-   , HTTP::Message        => '6.07'
+   , HTTP::Message        => '6.06'
+   , Mojolicious          => '6.00'
    }
  , AUTHOR       => 'Heiko Jansen/Mark Overmeer'
  , ABSTRACT     => 'SOAP with Mojolicious'
@@ -29,7 +29,7 @@ LICENSE         = artistic
 SKIP_LINKS	= XML::LibXML
 
 # for POD
-FIRST_YEAR      = 2017
+FIRST_YEAR      = 2016
 EMAIL           = perl@overmeer.net
 WEBSITE         = http://perl.overmeer.net/xml-compile/
 PODTAIL		= ../XML-shared-podtail
