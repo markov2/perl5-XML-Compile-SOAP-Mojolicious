@@ -1,6 +1,8 @@
 
 ==== history of XML::Compile::SOAP::Mojolicious
 
+version 0.03:
+
 version 0.02: Thu 17 Mar 10:21:32 CET 2016
 	- fix first year of release
 	- fix dependency to Mojo

@@ -1,3 +1,7 @@
+# This code is part of distribution XML-Compile-SOAP-Mojolicious.
+# Meta-POD processed with # OODoc into POD and HTML manual-pages. See README.md
+# Copyright Mark Overmeer.  Licensed under the same terms as Perl itself.
+
 use warnings;
 use strict;
 
@@ -160,7 +164,6 @@ C<one-way> (client initiated, no answer required), C<request-response>
 initiated "challenge").
 
 =cut
-
 
 sub compileClient(@) {
     my ( $self, %args ) = @_;
