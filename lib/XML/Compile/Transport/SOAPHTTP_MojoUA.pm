@@ -289,7 +289,11 @@ sub _prepare_call($) {
     # when the sub is left (which would cause the termination of
     # the request)
     my $ua = Mojo::UserAgent->new;
-
+    
+    if(my $callback = $self->uaStartCallback) {
+            $ua->on(start => $callback);
+    }
+    
     # async call
     sub {
         my ( $content, $trace, $mtom, $callback ) = @_;
@@ -352,11 +356,7 @@ sub _prepare_call($) {
         }
         $tx->req->body($request->content);
 
-        if(my $callback = $self->uaStartCallback) {
-            $ua->on(start => $callback);
-        }
-
-        $ua->start(
+	$ua->start(
             $tx => sub {
                 my ($ua, $tx) = @_;
                 $handler->($tx);
