@@ -184,24 +184,24 @@ sub compileClient(@) {
         $trace->{transport_start} = $start;
 
         my $handler = sub {
-            my ( $textin, $xops ) = @_;
+            my ($textin, $xops) = @_;
             my $connected = time;
 
             my $xmlin;
-            if ($textin) {
+            if($textin) {
                 $xmlin = eval { $parser->parse_string($$textin) };
                 $trace->{error} = $@ if $@;
             }
 
             my $answer;
-            if ( $kind eq 'one-way' ) {
+            if($kind eq 'one-way') {
                 my $response = $trace->{http_response};
                 my $code = defined $response ? $response->code : -1;
-                if ( $code == 202 ) { $answer = $xmlin || {} }
-                else                { $trace->{error} = "call failed with code $code" }
+                if($code == 202) { $answer = $xmlin || {} }
+                else  { $trace->{error} = "call failed with code $code" }
             }
-            elsif ($xmlin) { $answer = $xmlin }
-            else           { $trace->{error} ||= 'no xml as answer' }
+            elsif($xmlin) { $answer = $xmlin }
+            else          { $trace->{error} ||= 'no xml as answer' }
 
             my $end = $trace->{transport_end} = time;
 
@@ -250,11 +250,11 @@ sub _prepare_call($) {
         error __x"SOAP version {version} not implemented", version => $version;
     }
 
-    if ( $method eq 'POST' ) {
+    if($method eq 'POST') {
         $header->header( SOAPAction => qq{"$action"} )
             if defined $action;
     }
-    elsif ( $method eq 'M-POST' ) {
+    elsif($method eq 'M-POST') {
         $header->header( Man => qq{"$http_ext_id"; ns=$mpost_id} );
         $header->header( "$mpost_id-SOAPAction", qq{"$action"} )
             if $version eq 'SOAP11';
@@ -277,10 +277,10 @@ sub _prepare_call($) {
 
     # Create handler
 
-    my ( $create_message, $parse_message )
-        = exists $INC{'XML/Compile/XOP.pm'}
-        ? $self->_prepare_xop_call($content_type)
-        : $self->_prepare_simple_call($content_type);
+    my ($create_message, $parse_message)
+      = exists $INC{'XML/Compile/XOP.pm'}
+      ? $self->_prepare_xop_call($content_type)
+      : $self->_prepare_simple_call($content_type);
 
     $parse_message = $self->_prepare_for_no_answer($parse_message)
         unless $expect;
@@ -289,15 +289,15 @@ sub _prepare_call($) {
     # when the sub is left (which would cause the termination of
     # the request)
     my $ua = Mojo::UserAgent->new;
-    
+
     if(my $callback = $self->uaStartCallback) {
-            $ua->on(start => $callback);
+       $ua->on(start => $callback);
     }
-    
+
     # async call
     sub {
         my ( $content, $trace, $mtom, $callback ) = @_;
-        $create_message->( $request, $content, $mtom );
+        $create_message->($request, $content, $mtom);
 
         $trace->{http_request} = $request;
 
@@ -306,7 +306,7 @@ sub _prepare_call($) {
 
             unless(blessed $tx && $tx->isa('Mojo::Transaction::HTTP')) {
                 $trace->{error} = "Did not receive a transaction object";
-                return $callback->( undef, undef, $trace );
+                return $callback->(undef, undef, $trace);
             }
 
 			my $res     = $tx->res;
@@ -356,11 +356,11 @@ sub _prepare_call($) {
         }
         $tx->req->body($request->content);
 
-	$ua->start(
+        $ua->start(
             $tx => sub {
                 my ($ua, $tx) = @_;
                 $handler->($tx);
-            }
+            },
         );
     };
 }
