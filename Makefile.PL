@@ -4,7 +4,7 @@ use 5.010;
 
 WriteMakefile
  ( NAME	 	=> 'XML::Compile::SOAP::Mojolicious'
- , VERSION	=> '0.04'
+ , VERSION	=> '0.05'
  , PREREQ_PM    =>
    { XML::Compile::SOAP   => '3.16'
    , Log::Report          => '1.05'
