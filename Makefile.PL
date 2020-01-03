@@ -11,6 +11,8 @@ WriteMakefile
    , Time::HiRes          => 0
    , HTTP::Message        => '6.06'
    , Mojolicious          => '8.25'
+   , XML::Compile::WSDL11 => '3.00',
+   , XML::Compile::SOAP12 => '3.00',
    }
  , AUTHOR       => 'Mark Overmeer <markov@overmeer.net>'
  , ABSTRACT     => 'SOAP with Mojolicious'
