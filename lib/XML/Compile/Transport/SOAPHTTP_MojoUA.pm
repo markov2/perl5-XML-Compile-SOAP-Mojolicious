@@ -44,10 +44,10 @@ XML::Compile::Transport::SOAPHTTP_MojoUA - exchange XML via Mojo::UserAgent
  use XML::Compile::Transport::SOAPHTTP_MojoUA;
 
  my $http = XML::Compile::Transport::SOAPHTTP_MojoUA->new(
-   , ua_start_callback => \&code
+   , ua_start_callback => \&code,
+   , mojo_ua           => $t->ua,
    );
 
-@options);
  my $send = $http->compileClient(@options2);
 
  my $call = $wsdl->compileClient
@@ -93,6 +93,25 @@ This module was contributed by Heiko Jansen F<hjansen@cpan.org>
 =default ua_start_callback C<undef>
 A subroutine ref passed to the C<start> event of the user agent object.
 
+=option  mojo_ua M<Mojo::UserAgent>-object
+=default mojo_ua C<undef>
+With this option you can pass in the mojo user agent instead of having
+the module instantiate a new one. This is especially important when
+using this module from within L<Test::Mojo> to communicate with a mock
+soap server, you should take care of passing the user agent object of
+the mojo app under test, otherwise you tests will probably derail with
+an app object that has gone out of scope unexpectedly.
+
+  my $t = Test::Mojo->new('Mojolicious');
+
+  my $httpUa = XML::Compile::Transport::SOAPHTTP_MojoUA->new(
+      mojo_ua => $t->ua
+  );
+
+Note that when you are using the C<ua_start_callback> option in
+connection with an shared ua instance, this might cause problem for
+later uses of this ua as the callback: it will get called at every
+start of the ua, even outside of the SOAP use.
 =cut
 
 sub init($) {
@@ -101,6 +120,7 @@ sub init($) {
 		panic "callback not a code" if reftype $cb ne 'CODE';
 	}
 
+    $self->{mojo_ua} = $args->{mojo_ua};
     $self->SUPER::init($args);
     $self;
 }
@@ -288,7 +308,7 @@ sub _prepare_call($) {
     # Needs to be outside the sub so it does not go out of scope
     # when the sub is left (which would cause the termination of
     # the request)
-    my $ua = Mojo::UserAgent->new;
+    my $ua = $self->{mojo_ua} || Mojo::UserAgent->new;
 
     if(my $callback = $self->uaStartCallback) {
        $ua->on(start => $callback);

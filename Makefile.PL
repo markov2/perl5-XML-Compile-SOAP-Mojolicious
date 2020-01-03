@@ -10,7 +10,7 @@ WriteMakefile
    , Log::Report          => '1.05'
    , Time::HiRes          => 0
    , HTTP::Message        => '6.06'
-   , Mojolicious          => '6.00'
+   , Mojolicious          => '8.25'
    }
  , AUTHOR       => 'Mark Overmeer <markov@overmeer.net>'
  , ABSTRACT     => 'SOAP with Mojolicious'
