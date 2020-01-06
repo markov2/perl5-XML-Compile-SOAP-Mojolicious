@@ -1,6 +1,8 @@
 
 ==== history of XML::Compile::SOAP::Mojolicious
 
+version 0.07:
+
 version 0.06: Mon  6 Jan 08:17:10 CET 2020
 
 	Fixes:
